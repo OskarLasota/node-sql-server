@@ -2,24 +2,27 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
 const app = express();
-
+require('dotenv').config();
 
 const SELECT_ALL_PRODUCTS_QUERY = 'SELECT * FROM products';
 
 //this should be hidden
 const connection = mysql.createConnection({
-    host: 'bolosassuncao.com.br',
-    user: 'bolosa92_main',
-    password: '1WLW9YUXfLFL',
-    database: 'bolosa92_bolo_db'
+    host: process.env.host,
+    user: process.env.user,
+    password: process.env.password,
+    database: process.env.database,
 });
 
 connection.connect(err => {
     if(err){
+        console.log("connection error");
+        console.log(process.env.host);
         return err;
+    }else{
+        console.log("connection success");
     }
 });
-
 console.log(connection);
 
 app.use(cors());
